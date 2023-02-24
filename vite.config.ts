@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import legacy from '@vitejs/plugin-legacy' // 必须安装terser
 import checker from 'vite-plugin-checker'
 import { resolve } from 'path';
+import eslint from 'vite-plugin-eslint'
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
 }
@@ -69,36 +70,44 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     // 这个也可以解决兼容性问题
     // https://vitejs.dev/config/
     // legacy优先级高于build
-    plugins: [vue(), legacy({
-      targets: ['chrome 52', 'IE 11'],
-      additionalLegacyPolyfills: ['regenerator-runtime/runtime'], // 面向IE11时需要此插件
-      renderLegacyChunks: true,
-      polyfills: [
-        'es.symbol',
-        'es.array.filter',
-        'es.promise',
-        'es.promise.finally',
-        'es/map',
-        'es/set',
-        'es.array.for-each',
-        'es.object.define-properties',
-        'es.object.define-property',
-        'es.object.get-own-property-descriptor',
-        'es.object.get-own-property-descriptors',
-        'es.object.keys',
-        'es.object.to-string',
-        'web.dom-collections.for-each',
-        'esnext.global-this',
-        'esnext.string.match-all'
-      ],
-    }),
-    // !process.env.VITEST ? checker({ typescript: true, vueTsc: true }) : undefined,
-    !process.env.VITEST ? checker({ typescript: true, vueTsc: true }) : undefined,
+    plugins: [
+      vue(),
+      legacy({
+        targets: ['chrome 52', 'IE 11'],
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime'], // 面向IE11时需要此插件
+        renderLegacyChunks: true,
+        polyfills: [
+          'es.symbol',
+          'es.array.filter',
+          'es.promise',
+          'es.promise.finally',
+          'es/map',
+          'es/set',
+          'es.array.for-each',
+          'es.object.define-properties',
+          'es.object.define-property',
+          'es.object.get-own-property-descriptor',
+          'es.object.get-own-property-descriptors',
+          'es.object.keys',
+          'es.object.to-string',
+          'web.dom-collections.for-each',
+          'esnext.global-this',
+          'esnext.string.match-all'
+        ],
+      }),
+      // !process.env.VITEST ? checker({ typescript: true, vueTsc: true }) : undefined,
+      !process.env.VITEST ? checker({ typescript: true, vueTsc: true }) : undefined,
+      eslint({
+        include: ['src/**/*.js', 'src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue', 'src/*.js','src/*.ts', 'src/*.tsx', 'src/*.vue'],
+        // include: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue', 'src/**/*.js'],
+        exclude: ['node_modules'],
+        cache: false
+      })
       // 动态导入
       // dynamicImportVars({})
     ],
     //  envPrefix:"APP_",
-    envDir: "env"
+    envDir: "env",
   };
 }
 
