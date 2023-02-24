@@ -1,20 +1,19 @@
-import { defineConfig, loadEnv } from 'vite'
+import { loadEnv } from 'vite'
+import type { ConfigEnv, UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import legacy from '@vitejs/plugin-legacy' // 必须安装terser
 import checker from 'vite-plugin-checker'
-import path from 'path'
-import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
-function resolve(dir) {
-  return path.join(__dirname, dir);
+import { resolve } from 'path';
+function pathResolve(dir: string) {
+  return resolve(process.cwd(), '.', dir);
 }
 
-export default ({ mode }) => {
+export default ({ command, mode }: ConfigEnv): UserConfig => {
   //据当前工作目录中的 `mode` 加载 .env 文件
   //设置第三个参数为 '' 来加载所有环境变量，而不管是否有 `VITE_` 前缀。
   // const config = loadEnv(mode, process.cwd(), '')  // { VITE_APP_TITLE: '行政争议实质性化解平台dev' }
   const config = loadEnv(mode, process.cwd())  // { VITE_APP_TITLE: '行政争议实质性化解平台dev' }
-
-  return defineConfig({
+  return {
     base: '/',
     server: {
       proxy: {
@@ -40,7 +39,7 @@ export default ({ mode }) => {
       preprocessorOptions: {
         scss: {
           // 全局导入
-          additionalData: '@use "@assets/css/global.scss";'
+          additionalData: '@use "/@/assets/css/var.scss";'
           // additionalData: `$injectedColor: orange;`,
         },
       }
@@ -49,17 +48,18 @@ export default ({ mode }) => {
     resolve: {
       // 不 建议忽略自定义导入类型的扩展名（例如：.vue），因为它会影响 IDE 和类型支持。
       extensions: ['.js', '.ts', '.jsx', '.tsx', '.json'],
-      alias: {
-        "@": resolve("src"),
-        "@api": resolve("src/api"),
-        "@assets": resolve("src/assets"),
-        "@components": resolve("src/components"),
-        "@plugins": resolve("src/plugins"),
-        "@router": resolve("src/router"),
-        "@store": resolve("src/store"),
-        "@utils": resolve("src/utils"),
-        "@views": resolve("src/views"),
-      }
+      alias: [
+        // /@/xxxx => src/xxxx
+        {
+          find: /\/@\//,
+          replacement: pathResolve('src') + '/',
+        },
+        // /#/xxxx => types/xxxx
+        {
+          find: /\/#\//,
+          replacement: pathResolve('types') + '/',
+        },
+      ]
     },
     // 可以解决兼容性问题
     build: {
@@ -99,6 +99,6 @@ export default ({ mode }) => {
     ],
     //  envPrefix:"APP_",
     envDir: "env"
-  })
+  };
 }
 
