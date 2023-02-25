@@ -16,18 +16,22 @@ module.exports = {
     },
   },
   extends: [
-    'plugin:vue/vue3-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended', // 解决ESlint和Prettier冲突
+    // 'eslint:recommended', // eslint推荐的规则
+    'plugin:vue/vue3-recommended', // vue组件特有的规则
+    'plugin:@typescript-eslint/recommended', // ts推荐的规则
+    'plugin:prettier/recommended', // eslint-config-prettier 关闭与prettier冲突的规则，prettier接管代码风格。其依赖需要eslint-plugin-prettier
   ],
+  /*
+   * "off" 或 0    ==>  关闭规则
+   * "warn" 或 1   ==>  打开的规则作为警告（不影响代码执行）
+   * "error" 或 2  ==>  规则作为一个错误（代码不能执行，界面报错）
+   */
   rules: {
-    'vue/script-setup-uses-vars': 'error',
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-empty-function': 'off',
-    'vue/custom-event-name-casing': 'off',
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
@@ -49,7 +53,10 @@ module.exports = {
       },
     ],
     'space-before-function-paren': 'off',
-
+    // https://eslint.vuejs.org/rules/
+    //防止将定义在< script setup >标签中，但在template 已使用的变量标记为未使用。该规则仅在设置 no-unused-vars 规则时生效。是在 eslint-plugin-vue 的 v7.13.0 版本中开始使用的
+    'vue/custom-event-name-casing': 'off',
+    'vue/script-setup-uses-vars': 'error',
     'vue/attributes-order': 'off',
     'vue/one-component-per-file': 'off',
     'vue/html-closing-bracket-newline': 'off',
