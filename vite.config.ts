@@ -1,10 +1,10 @@
-import { loadEnv } from 'vite'
-import type { ConfigEnv, UserConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import legacy from '@vitejs/plugin-legacy' // 必须安装terser
-import checker from 'vite-plugin-checker'
+import { loadEnv } from 'vite';
+import type { ConfigEnv, UserConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import legacy from '@vitejs/plugin-legacy'; // 必须安装terser
+import checker from 'vite-plugin-checker';
 import { resolve } from 'path';
-import eslint from 'vite-plugin-eslint'
+import eslint from 'vite-plugin-eslint';
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
 }
@@ -13,7 +13,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   //据当前工作目录中的 `mode` 加载 .env 文件
   //设置第三个参数为 '' 来加载所有环境变量，而不管是否有 `VITE_` 前缀。
   // const config = loadEnv(mode, process.cwd(), '')  // { VITE_APP_TITLE: '行政争议实质性化解平台dev' }
-  const config = loadEnv(mode, process.cwd())  // { VITE_APP_TITLE: '行政争议实质性化解平台dev' }
+  const config = loadEnv(mode, process.cwd()); // { VITE_APP_TITLE: '行政争议实质性化解平台dev' }
   return {
     base: '/',
     server: {
@@ -30,20 +30,20 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/fallback/, ''),
         },
-      }
+      },
     },
     // 全局变量 不知道为什么import.meta.env.VITE_APP_TITLE为undefined
     define: {
-      'process.env': config
+      'process.env': config,
     },
     css: {
       preprocessorOptions: {
         scss: {
           // 全局导入
-          additionalData: '@use "/@/assets/css/var.scss";'
+          additionalData: '@use "/@/assets/css/var.scss";',
           // additionalData: `$injectedColor: orange;`,
         },
-      }
+      },
     },
     //配 置项目路径别名，在开发时不需要写完整的路径名称
     resolve: {
@@ -60,11 +60,11 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           find: /\/#\//,
           replacement: pathResolve('types') + '/',
         },
-      ]
+      ],
     },
     // 可以解决兼容性问题
     build: {
-      rollupOptions: {}
+      rollupOptions: {},
       // target: 'es2015'
     },
     // 这个也可以解决兼容性问题
@@ -92,22 +92,21 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           'es.object.to-string',
           'web.dom-collections.for-each',
           'esnext.global-this',
-          'esnext.string.match-all'
+          'esnext.string.match-all',
         ],
       }),
       // !process.env.VITEST ? checker({ typescript: true, vueTsc: true }) : undefined,
       !process.env.VITEST ? checker({ typescript: true, vueTsc: true }) : undefined,
       eslint({
-        include: ['src/**/*.js', 'src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue', 'src/*.js','src/*.ts', 'src/*.tsx', 'src/*.vue'],
-        // include: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue', 'src/**/*.js'],
+        // 检测不到src下的js和ts vue
+        include: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue', 'src/**/*.js'],
         exclude: ['node_modules'],
-        cache: false
-      })
+        cache: false,
+      }),
       // 动态导入
       // dynamicImportVars({})
     ],
     //  envPrefix:"APP_",
-    envDir: "env",
+    envDir: 'env',
   };
-}
-
+};
