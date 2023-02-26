@@ -5,6 +5,7 @@ import legacy from '@vitejs/plugin-legacy'; // 必须安装terser
 import checker from 'vite-plugin-checker';
 import { resolve } from 'path';
 import eslint from 'vite-plugin-eslint';
+import stylelint from 'vite-plugin-stylelint';
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
 }
@@ -103,10 +104,11 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         exclude: ['node_modules'],
         cache: false,
       }),
+      stylelint({ exclude: ['node_modules'], cache: false }),
       // 动态导入
       // dynamicImportVars({})
     ],
-    //  envPrefix:"APP_",
+    // envPrefix:"APP_",
     envDir: 'env',
   };
 };
