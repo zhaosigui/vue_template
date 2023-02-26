@@ -28,7 +28,7 @@ module.exports = {
         ignorePseudoElements: ['v-deep'],
       },
     ],
-    //禁止未知的@规则。
+    // 不验证@未知的名字，为了兼容scss的函数
     'at-rule-no-unknown': [
       true,
       {
@@ -43,6 +43,7 @@ module.exports = {
           'each',
           'include',
           'mixin',
+          'important',
         ],
       },
     ],
@@ -234,6 +235,7 @@ module.exports = {
   ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts'],
   overrides: [
     {
+      // 这个配置好像没什么用
       files: ['*.vue', '**/*.vue', '*.html', '**/*.html'],
       extends: ['stylelint-config-recommended'],
       rules: {
@@ -253,8 +255,8 @@ module.exports = {
       },
     },
     {
-      files: ['*.scss', '**/*.sass'],
-      // 识别scss文件
+      files: ['*.scss', '**/*.sass', '*.css', '**/*.css'],
+      // 识别scss和css文件
       customSyntax: 'postcss-scss',
       extends: ['stylelint-config-standard', 'stylelint-config-recommended-vue'],
     },
