@@ -17,6 +17,7 @@
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": "/", 
+    "types": ["vite/client"],
     "paths": {
       "/@/*": ["src/*"],
       "/#/*": ["types/*"]

@@ -17,7 +17,7 @@
 //   ?.match(/src%%((\w|-)*)/)?.[1]
 //   ?.replace(/s$/, '');
 
-// // /** @type {import('cz-git').UserConfig} */
+// /** @type {import('cz-git').UserConfig} */
 // module.exports = {
 //   ignores: [(commit) => commit.includes('init')],
 //   extends: ['@commitlint/config-conventional'],
@@ -105,6 +105,8 @@
 //     // customScopesAlias: 'custom:     自定义',
 //   },
 // };
+
+// git commit -m <type>[optional scope]: <description>
 module.exports = {
   extends: ['@commitlint/config-conventional'],
   rules: {
@@ -137,6 +139,13 @@ module.exports = {
     ],
   },
   prompt: {
+    // alias: {
+    //   f: 'docs: fix typos',
+    //   r: 'docs: update README',
+    //   s: 'style: update code format',
+    //   b: 'build: bump dependencies',
+    //   c: 'chore: update config',
+    // },
     questions: {
       type: {
         description: "Select the type of change that you're committing",
@@ -201,35 +210,35 @@ module.exports = {
           },
         },
       },
-      // scope: {
-      //   description: 'What is the scope of this change (e.g. component or file name)',
-      // },
-      // subject: {
-      //   description: 'Write a short, imperative tense description of the change',
-      // },
-      // body: {
-      //   description: 'Provide a longer description of the change',
-      // },
-      // isBreaking: {
-      //   description: 'Are there any breaking changes?',
-      // },
-      // breakingBody: {
-      //   description:
-      //     'A BREAKING CHANGE commit requires a body. Please enter a longer description of the commit itself',
-      // },
-      // breaking: {
-      //   description: 'Describe the breaking changes',
-      // },
-      // isIssueAffected: {
-      //   description: 'Does this change affect any open issues?',
-      // },
-      // issuesBody: {
-      //   description:
-      //     'If issues are closed, the commit requires a body. Please enter a longer description of the commit itself',
-      // },
-      // issues: {
-      //   description: 'Add issue references (e.g. "fix #123", "re #123".)',
-      // },
+      scope: {
+        description: 'What is the scope of this change (e.g. component or file name)',
+      },
+      subject: {
+        description: 'Write a short, imperative tense description of the change',
+      },
+      body: {
+        description: 'Provide a longer description of the change',
+      },
+      isBreaking: {
+        description: 'Are there any breaking changes?',
+      },
+      breakingBody: {
+        description:
+          'A BREAKING CHANGE commit requires a body. Please enter a longer description of the commit itself',
+      },
+      breaking: {
+        description: 'Describe the breaking changes',
+      },
+      isIssueAffected: {
+        description: 'Does this change affect any open issues?',
+      },
+      issuesBody: {
+        description:
+          'If issues are closed, the commit requires a body. Please enter a longer description of the commit itself',
+      },
+      issues: {
+        description: 'Add issue references (e.g. "fix #123", "re #123".)',
+      },
     },
   },
 };
