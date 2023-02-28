@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   // stylelint-order是CSS属性排序插件(
-  plugins: ['stylelint-order', 'stylelint-scss'],
+  plugins: ['stylelint-order'],
   // stylelint-config-prettier:  配置stylelint和prettier兼容
   // stylelint-config-standard: Stylelint的标准可共享配置规则，详细可查看官方文档
   extends: ['stylelint-config-standard', 'stylelint-config-prettier'],
@@ -255,9 +255,8 @@ module.exports = {
       },
     },
     {
-      files: ['*.scss', '**/*.sass', '*.css', '**/*.css'],
-      // 识别scss和css文件
-      customSyntax: 'postcss-scss',
+      files: ['*.less', '**/*.less', '*.css', '**/*.css'],
+      customSyntax: 'postcss-less',
       extends: ['stylelint-config-standard', 'stylelint-config-recommended-vue'],
     },
   ],

@@ -9,6 +9,7 @@
 
 <template>
   <div>
+    <a-button>Add</a-button>
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>
@@ -19,7 +20,7 @@
   <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped lang="scss">
+<style scoped lang="less">
   .logo {
     height: 6em;
     padding: 1.5em;
