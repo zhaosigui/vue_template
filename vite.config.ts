@@ -62,8 +62,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         },
       ],
     },
-    // 可以解决兼容性问题
     build: {
+      // target: 'es2015'
       /**
        * https://cn.vitejs.dev/config/build-options.html#build-terseroptions
        * 当设置为 'terser' 时必须先安装 Terser。（未安装）
@@ -83,16 +83,22 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       // chunkSizeWarningLimit: 2000,
       rollupOptions: {
         output: {
+          // https://rollupjs.org/configuration-options/#output-manualchunks
           manualChunks(id) {
             if (id.includes('node_modules')) {
               const arr = id.toString().split('node_modules/')[1].split('/');
               console.log(arr[0]);
+              if (arr[0] === 'ant-design-vue') {
+                return 'chunk_ant-design-vue';
+              }
+              if (arr[0] === '@vue ') {
+                return 'chunk_@vue';
+              }
               return 'vendor';
             }
           },
         },
       },
-      // target: 'es2015'
     },
     plugins: createVitePlugins(viteEnv, isBuild),
     // envPrefix:"APP_",
