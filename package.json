@@ -1,12 +1,12 @@
 {
-  "name": "pj-xzjc-web-pc",
+  "name": "vue-template",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "author": {
     "name": "zhaosigui",
     "email": "zhaosigui@126.com",
-    "url": "https://github.com/zhaosigui/pj-xzjc-web-pc"
+    "url": "https://github.com/zhaosigui/vue-template"
   },
   "scripts": {
     "dev": "vite --mode development",
