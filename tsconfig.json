@@ -1,29 +1,32 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ESNext", // 字段指明经过tsc编译后的ECMAScript代码语法版本，根据ECMAScript语法标准，默认值为ES3,我们也可以使用ES5/ES6，甚至最新的ESNext语法来编写TS
     "useDefineForClassFields": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "strict": true, 
-    "jsx": "preserve",
-    "sourceMap": true,
+    "module": "ESNext", // 知名tsc编译后的代码应该符合这种“模块化方案”,可以指定的枚举值有：none, common.js,amd,system,umd,es2015,es2020或esnext,默认值为none
+    "moduleResolution": "Node", //声明如何处理模块，枚举值：classic、node会根据module字段来决定默认值（推荐手动设置为node）
+    "strict": true, // 启用所有严格类型检查选项
+    "jsx": "preserve", // 有jsx语法需要支持的项目，可以设置值preserve、react等
+    "sourceMap": true, // 生成想要的".map"文件
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
+    "isolatedModules": true, // 将每个文件作为单独的模块
+    "esModuleInterop": true, // 实现CommonJS和ES模块之间的互操作性import .. from ...;const xx=require('xx')
     "lib": [
+      // 用于为了在我们的代码中显示的指明需要支持的ECMAScript语法或环境对应的类型声明文件，例如我们的代码会使用到浏览器中的一些对象window、document这些全局对象api对于TypeScript Complier来说是不能识别的
       "ESNext",
       "DOM"
     ],
     "skipLibCheck": true,
     "noEmit": true,
-    "baseUrl": "/", 
-    "types": ["vite/client"],
+    "baseUrl": "/", // 设置基本目录以解析非绝对模块名称（定义一个根目录，以此进行绝对文件路径解析），必选，与paths成对出现，以tsconfig.json文件所在目录开始
+    "types": ["vite/client"], // 需要包含的类型声明文件名列表
     "paths": {
+      //路径重映射要和baseUrl对应
       "/@/*": ["src/*"],
       "/#/*": ["types/*"]
     }
   },
   "include": [
+    // 用于指明需要被tsc编译的文件或文件夹列表
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
@@ -35,10 +38,10 @@
     // "mock/**/*.ts",
     "vite.config.ts"
   ],
-  "exclude": ["node_modules",  "dist", "**/*.js"],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+  "exclude": ["node_modules", "dist", "**/*.js"], //用于排除不需要tsc编译的文件或文件列表
+  // "references": [
+  //   {
+  //     "path": "./tsconfig.node.json"
+  //   }
+  // ]
 }
