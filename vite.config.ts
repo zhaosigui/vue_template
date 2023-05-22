@@ -103,5 +103,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     plugins: createVitePlugins(viteEnv, isBuild),
     // envPrefix:"APP_",
     envDir: 'env',
+    // 预构建
+    optimizeDeps: {
+      include: ['vue', 'pinia', 'vue-router', 'ant-design-vue/es'],
+      exclude: [],
+    },
   };
 };
